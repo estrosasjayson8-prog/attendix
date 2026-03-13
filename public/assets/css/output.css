@@ -1,0 +1,82 @@
+/*! tailwindcss v4.2.1 | MIT License | https://tailwindcss.com */
+.fixed {
+  position: fixed;
+}
+.z-50 {
+  z-index: 50;
+}
+.container {
+  width: 100%;
+}
+.mx-auto {
+  margin-inline: auto;
+}
+.flex {
+  display: flex;
+}
+.h-screen {
+  height: 100vh;
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.w-3\/4 {
+  width: calc(3 / 4 * 100%);
+}
+.w-full {
+  width: 100%;
+}
+.min-w-\[80px\] {
+  min-width: 80px;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-center {
+  justify-content: center;
+}
+.rounded-full {
+  border-radius: calc(infinity * 1px);
+}
+.border-\[\#800000\] {
+  border-color: #800000;
+}
+.bg-\[\#800000\] {
+  background-color: #800000;
+}
+.bg-\[\#990000\] {
+  background-color: #990000;
+}
+.bg-\[\#f5f2f0\] {
+  background-color: #f5f2f0;
+}
+.text-center {
+  text-align: center;
+}
+.text-\[\#800000\] {
+  color: #800000;
+}
+.text-\[\#f5f2f0\] {
+  color: #f5f2f0;
+}
+.italic {
+  font-style: italic;
+}
+.transition-all {
+  transition-property: all;
+  transition-timing-function: var(--tw-ease, ease);
+  transition-duration: var(--tw-duration, 0s);
+}
+.hover\:bg-\[\#990000\] {
+  &:hover {
+    @media (hover: hover) {
+      background-color: #990000;
+    }
+  }
+}
