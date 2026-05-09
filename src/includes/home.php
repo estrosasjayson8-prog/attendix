@@ -144,9 +144,19 @@ include 'header.php';
     <section class="adaptive-card rounded-[2.5rem] shadow-2xl overflow-hidden mb-12">
         <div class="p-8 border-b border-black/5 flex justify-between items-center bg-black/5">
             <h2 class="adaptive-text font-black text-xl uppercase tracking-tight">Employee Directory</h2>
-            <button onclick="openRegisterModal()" class="primary-btn px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider shadow-lg">
-                + Register New Entry
-            </button>
+           <div class="flex gap-3">
+    <a href="attendance_report.php" class="adaptive-card border-black/10 px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider shadow-sm flex items-center hover:bg-black/5 transition-all">
+        📊 Attendance Logs
+    </a>
+    
+    <button onclick="openDeleteModal()"  class="primary-btn px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider shadow-lg">
+        🗑️ Delete Staff
+    </a>
+
+    <button onclick="openRegisterModal()" class="primary-btn px-6 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider shadow-lg">
+        + Register New Entry
+    </button>
+</div>
         </div>
 
         <div class="overflow-x-auto">
@@ -244,7 +254,44 @@ include 'header.php';
     </div>
 </div>
 
+<div id="deleteModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-6">
+    <div class="adaptive-card w-full max-w-md rounded-[3rem] p-10 shadow-3xl border-t-[12px] border-red-700 relative">
+        <button onclick="closeDeleteModal()" class="absolute top-8 right-8 text-gray-400 hover:adaptive-text font-bold">✕</button>
+        
+        <h2 class="text-3xl font-black text-red-700 mb-2 uppercase italic tracking-tighter">Terminate Record</h2>
+        <p class="text-[10px] uppercase font-bold opacity-50 mb-6 adaptive-text">Authorized personal removal only.</p>
+        
+        <form action="delete_employee.php" method="POST" class="space-y-5">
+            <div>
+                <label class="label-caps text-[9px]">Select Employee to Remove</label>
+                <select name="employee_id" required class="modal-input">
+                    <option value="" disabled selected>Select from directory...</option>
+                    <?php 
+                    // This uses the existing $employees variable already defined in your home.php
+                    foreach($employees as $e): 
+                    ?>
+                        <option value="<?php echo $e['employee_id']; ?>">
+                            [<?php echo $e['employee_id']; ?>] <?php echo htmlspecialchars($e['full_name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <div>
+                <label class="label-caps text-[9px]">Security Password</label>
+                <input type="password" name="admin_password" placeholder="Enter admin123" required class="modal-input">
+            </div>
+
+            <button type="submit" name="confirm_delete" class="bg-red-700 text-white w-full py-4 font-black uppercase text-xs rounded-2xl shadow-lg hover:scale-[1.02] transition-all">
+                Confirm Deletion
+            </button>
+        </form>
+    </div>
+</div>
+
 <script>
+function openDeleteModal() { document.getElementById('deleteModal').classList.remove('hidden'); }
+function closeDeleteModal() { document.getElementById('deleteModal').classList.add('hidden'); }
 function openRegisterModal() { document.getElementById('registerModal').classList.remove('hidden'); }
 function closeRegisterModal() { document.getElementById('registerModal').classList.add('hidden'); }
 function openEditModal(emp) {
@@ -257,9 +304,12 @@ function openEditModal(emp) {
 function closeEditModal() { document.getElementById('editModal').classList.add('hidden'); }
 
 window.onclick = function(e) {
-    if (e.target.id === 'editModal' || e.target.id === 'registerModal') {
-        closeEditModal(); closeRegisterModal();
-    }
+    const modals = ['editModal', 'registerModal', 'deleteModal'];
+    modals.forEach(id => {
+        if (e.target.id === id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+    });
 }
 
 document.getElementById('employeeSearch').addEventListener('keyup', function() {
